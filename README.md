@@ -34,6 +34,8 @@ Raw frames keep **all original vendor-wide columns** as per-field Parquet; field
 
 Use [`notebooks/run_txf_session_flow_persistence.ipynb`](notebooks/run_txf_session_flow_persistence.ipynb) (Colab). Connect FinLab with `FINLAB_API_TOKEN` from Colab Secrets. OAuth Drive access is interactive and confined to your authenticated account. The code **does not install any automatic daily schedule** and does not persist credential strings in Google Drive.
 
+The Colab bootstrap **updates an existing clean checkout with a fast-forward-only Git fetch**, installs dependencies using the active notebook kernel interpreter, adds `src/` to that kernel's `sys.path`, clears stale project module entries and **verifies the actual imported `config.py` location** before the research cells run. This addresses the common `ModuleNotFoundError: No module named 'txf_session_flow_persistence.config'` caused by the repo directory being mistaken for a namespace package. It does not modify your Drive cache or stored results. If the existing checkout contains local uncommitted edits or cannot be fast-forwarded, it stops instead of overwriting files. Rerun the notebook **from the first cell (Runtime → Run all)** rather than just its import cell.
+
 The runner authenticates Google Drive first, then reads both raw cache snapshots. If present, it **does not require the FinLab token**. If missing, a FinLab login is required and errors stop the run. The use of the full Google Drive OAuth scope is necessary for working with pre-existing folders the script did not create; grant only when you trust the local Colab session.
 
 ## Local validation and offline tests
