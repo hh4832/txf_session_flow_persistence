@@ -62,3 +62,7 @@ This is a live FinLab run, **not** a mock dataset. Unit tests use injected synth
 - Missing days remain missing. Any impossible full-minus-night contract counts abort the run. Partial coverage and amount anomalies are retained in `diagnostics/daily_qa.csv`; observations failing QA are excluded.
 - Unverified provider revisions require explicit refresh. No backfilled data may be silently substituted for live point-in-time snapshots.
 - No `CI` secrets required; `.github/workflows/ci.yml` only executes offline tests.
+
+### Colab Google Drive API compatibility (2026-10-23)
+
+The Drive v3 discovery client requires the exact camelCase request argument `pageSize` (not `page_size`) in `files().list()`. The raw-folder lookup now uses the API's accepted spelling; strict offline regression tests exercise the empty-cache and existing-folder paths. After any update, rerun the Colab notebook from the **first bootstrap cell**, which fast-forwards a clean checkout and resets the kernel's imported project modules. No existing Google Drive raw snapshots or results were altered by this code correction.

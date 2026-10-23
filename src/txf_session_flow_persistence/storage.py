@@ -63,7 +63,7 @@ class GoogleDriveStore:
         escaped = name.replace("\\", "\\\\").replace("'", "\\'")
         q = f"'{parent_id}' in parents and name = '{escaped}' and trashed = false"
         result = self.api.files().list(q=q, fields="nextPageToken,files(id,name,mimeType,md5Checksum)",
-                                       page_size=100, supportsAllDrives=True, includeItemsFromAllDrives=True).execute()
+                                       pageSize=100, supportsAllDrives=True, includeItemsFromAllDrives=True).execute()
         if result.get("nextPageToken"):
             raise RuntimeError("ambiguous large folder listing; refusing unsafe lookup")
         matches = result.get("files", [])
