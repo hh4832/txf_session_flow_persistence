@@ -88,7 +88,6 @@ def run_regime(store, cfg: ResearchConfig, *, getter=None, refresh_price=False):
         "No contemporaneous publication-time validation or independent exchange reconciliation.",
         "Prior v0.1.0 snapshots/results are untouched.",
     ]
-    import json
     artifacts = {
         "processed/market_features.parquet": parquet_bytes(analysis["market_features"]),
         "diagnostics/daily_qa.csv": _csv(qa.reset_index()),
