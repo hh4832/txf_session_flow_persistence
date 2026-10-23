@@ -1,0 +1,9 @@
+numpy>=1.26,<3
+pandas>=2.2,<3
+pyarrow>=17,<25
+scipy>=1.13,<2
+statsmodels>=0.14,<0.15
+matplotlib>=3.8,<4
+google-api-python-client>=2.150,<3
+google-auth>=2.30,<3
+finlab>=2.2,<3
