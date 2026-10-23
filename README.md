@@ -66,3 +66,15 @@ This is a live FinLab run, **not** a mock dataset. Unit tests use injected synth
 ### Colab Google Drive API compatibility (2026-10-23)
 
 The Drive v3 discovery client requires the exact camelCase request argument `pageSize` (not `page_size`) in `files().list()`. The raw-folder lookup now uses the API's accepted spelling; strict offline regression tests exercise the empty-cache and existing-folder paths. After any update, rerun the Colab notebook from the **first bootstrap cell**, which fast-forwards a clean checkout and resets the kernel's imported project modules. No existing Google Drive raw snapshots or results were altered by this code correction.
+
+## v0.2.0 — TAIEX market-regime effect modification (exploratory, preregistered before execution)
+
+Use the new [TAIEX Regime Colab notebook](notebooks/run_txf_session_flow_regimes.ipynb). This **does not modify** v0.1.0 tables or original institutional-flow snapshots. The market index comes from FinLab `data.get("taiex_total_index:收盤指數")` (price index, not reinvested total-return index). The raw TAIEX single-column data and manifest SHA256 go to the existing RAW_FOLDER_ID in a new `taiex_index/` namespace; every run creates a separate immutable results folder under RESULTS_FOLDER_ID.
+
+- H1 night[T] → day[T] uses returns ending at close(T-1); H2 day[T] → next-night[T+1] uses returns ending at close(T).
+- Trailing 1/3/5 **trading-day** price returns; primary modifier is 3-day, secondary 1 and 5 days. Use continuous market-return × flow-direction interactions with 5-day realized index-volatility control and year fixed effects. HAC maxlags=max(5,k), BH-FDR for **all six** full-sample interactions.
+- Up/flat/down groups use earlier 70% return terciles, frozen on chronological last-30% holdout. Regime-specific differences are **descriptive only**; do not claim a subgroup p-value as discovery. Publish all six tests, both full/holdout, QA, and exact training tercile thresholds.
+- Existing v0.1.0 `full_session` and `afterhours` snapshots for the **identical date window** are reused without downloading; if absent, fail closed instead of silently substituting. FinLab auth is needed if TAIEX cache is absent; first time use the notebook with your Colab secret.
+- Data from a prior market session can inform H1 only when known at night start. Historical close values do not establish point-in-time data publication timing or tradability.
+
+This is an extension for **effect modification**, not a search for p<0.05. Inadequate holdout support is explicitly inconclusive, even if full-sample interactions survive BH-FDR.

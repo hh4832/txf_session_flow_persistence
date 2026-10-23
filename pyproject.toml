@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "txf-session-flow-persistence"
-version = "0.1.0"
+version = "0.2.0"
 description = "Statistical research on TXF foreign day/night trading flow persistence"
 requires-python = ">=3.11,<3.14"
 dependencies = ["numpy>=1.26,<3", "pandas>=2.2,<3", "pyarrow>=17,<25", "scipy>=1.13,<2", "statsmodels>=0.14,<0.15", "matplotlib>=3.8,<4"]
